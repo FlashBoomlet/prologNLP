@@ -145,3 +145,13 @@ adverb(terribly).
 adverb(eloquently).
 adverb(stupidly).
 adverb(illegally).
+
+preposition(against).
+preposition(for).
+preposition(before).
+preposition(after).
+preposition(outside).
+preposition(inside).
+preposition(with).
+preposition(without).
+
