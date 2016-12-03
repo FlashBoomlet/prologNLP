@@ -137,8 +137,8 @@ pr(v3, 0.2).  /* propbability that a verb is followed by a prepositionphrase*/
 pr(adj1, 0.5). /* probability that an adjective phrase is followed by a verb phrase */
 pr(adj2, 0.5). /* probability that an adjective phrase contains just an ajective and ends */
 
-pr(adv1, 0.5). /* probability that an adjective phrase is followed by a verb phrase */
-pr(adv2, 0.5). /* probability that an adjective phrase contains just an ajective and ends */
+pr(adv1, 0.5). /* probability that an adverb phrase contains just an adverb and ends */
+pr(adv1, 0.5). /* probability that an adverb phrase is followed by a verb phrase */
 
 pr(p1, 1.0).  /* probability a preposition is followed by a noun phrase */
 
