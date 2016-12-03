@@ -21,6 +21,8 @@ nounphrase([Article, Noun | Rest], End, Number) :-
 nounphrase([Article | Rest], End, Number) :-
     article(Article, Number), 
     adjectivephrase(Rest, End, _).
+nounphrase([Adjective, Noun | Rest], End, Number) :-
+    adjectivephrase([Adjective, Noun | Rest], End, _).    
 nounphrase([Noun | Rest], End, Number) :-
     noun(Noun, Number), 
     conjunctionphrase(Rest, End, _).
