@@ -30,6 +30,17 @@ nounphrase([Article, Noun | Rest], End, Number) :-
     article(Article, Number), 
     noun(Noun, Number),
     conjunctionphrase(Rest, End, _). 
+nounphrase([Preposition | Rest], End, Number) :-
+    prepositionphrase([Preposition | Rest], End, Number).  
+nounphrase([Noun | Rest], End, Number) :-
+    noun(Adverb, Number),
+    nounphrase(Rest, End, _).
+nounphrase([Noun, Conjunction | Rest], End, Number) :-
+    noun(Adverb, Number),
+    conjunction(Conjunction, Number),
+    nounphrase(Rest, End, _).
+
+
 
 verbphrase([Verb | End], End, Number) :-
     verb(Verb, Number).

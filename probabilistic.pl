@@ -27,10 +27,6 @@ nounphrase(Prob, [Article, Noun | Rest], End) :-
     pr(n4, P),
     prepositionphrase(P3, Rest, End),
     Prob is P*P1*P2*P3.
-nounphrase(Prob, [Adjective, Noun | Rest], End) :-
-    adjectivephrase(P1, [Adjective, Noun | Rest], End), 
-    pr(n8, P), 
-    Prob is P*P1.
 nounphrase(Prob, [Article | Rest], End) :-
     article(P1, Article), 
     adjectivephrase(P2, Rest, End), 
@@ -47,6 +43,33 @@ nounphrase(Prob, [Article, Noun | Rest], End) :-
     conjunctionphrase(P3, Rest, End), 
     pr(n7, P),
     Prob is P*P1*P2*P3.
+nounphrase(Prob, [Adjective, Noun | Rest], End) :-
+    adjectivephrase(P1, [Adjective, Noun | Rest], End), 
+    pr(n8, P), 
+    Prob is P*P1.
+/* add */
+nounphrase(Prob, [Preposition | Rest], End) :-
+    prepositionphrase(P1, [Preposition | Rest], End),  
+    pr(n9, P),
+    Prob is P*P1.
+
+
+/** [John, Tyler, ... ] */
+nounphrase(Prob, [Noun | Rest], End) :-
+    noun(P1, Adverb),
+    nounphrase(P2, Rest, End),
+    pr(n10, P),
+    Prob is P*P1*P2.
+/** [John and Tyler, ... ] */
+nounphrase(Prob, [Noun, Conjunction | Rest], End) :-
+    noun(P1, Adverb),
+    conjunction(P2, Conjunction),
+    nounphrase(P3, Rest, End),
+    pr(n11, P),
+    Prob is P*P1*P2*P3.
+
+
+
 
 verbphrase(Prob, [Verb | End], End) :-
     verb(P1, Verb), 
@@ -159,12 +182,15 @@ pr(r1, 1.0).
 
 pr(n1, 0.05).  /* probability that a nounphrase contains just a noun and ends */
 pr(n2, 0.15).  /* probability that a nounphrase contains an article and a noun and ends*/
-pr(n3, 0.15).  /* probability that a nounphrase contains just a noun and is followed by a preposition */
-pr(n4, 0.25).  /* probability that a nounphrase contains an article and noun and is followed by a preposition */
+pr(n3, 0.05).  /* probability that a nounphrase contains just a noun and is followed by a preposition */
+pr(n4, 0.05).  /* probability that a nounphrase contains an article and noun and is followed by a preposition */
 pr(n5, 0.10).  /* probability that a nounphrase contains an article and as adjective phrase */
 pr(n6, 0.10).  /* probability that a nounphrase contains a noun and then a conjunctionphrase */
 pr(n7, 0.10).  /* probability that a nounphrase contains an article, a noun and then a conjunctionphrase */
 pr(n8, 0.10).  /* probability that a nounphrase contains an adjective and then a noun */
+pr(n9, 0.10).  /* probability that a nounphrase contains a preposition and is followed by a noun*/
+pr(n10, 0.10). /* probability that an noun phrase contains a noun and an nounphrase */
+pr(n11, 0.10). /* probability that an noun phrase contains an noun, an and, and an nounphrase */
 
 pr(v1, 0.2).  /* probability that a verb ends the sentence */
 pr(v2, 0.18).  /* probability that a verb is followed by a nounphrase */
@@ -337,8 +363,9 @@ preposition(0.1 , before).
 preposition(0.1 , after).
 preposition(0.1 , outside).
 preposition(0.1 , inside).
-preposition(0.2 , with).
+preposition(0.1 , with).
 preposition(0.1 , without).
+preposition(0.1 , in).
 
 
 conjunction(1.0, and).
