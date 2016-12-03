@@ -1,41 +1,92 @@
 utterance(Prob, X) :- sentence(Prob, X, [ ]).
+
 sentence(Prob, Start, End) :-
     nounphrase(P1, Start, Rest),
     verbphrase(P2, Rest, End),
-    pr(r1, P), Prob is P*P1*P2.
-nounphrase(Prob, [Noun | End], End) :-
-    noun(P1, Noun), pr(n1, P), Prob is P*P1.
-nounphrase(Prob, [Article, Noun | End], End) :-
-    article(P1, Article), noun(P2, Noun), pr(n2, P),
+    pr(r1, P), 
     Prob is P*P1*P2.
+
+
+nounphrase(Prob, [Noun | End], End) :-
+    noun(P1, Noun), 
+    pr(n1, P), 
+    Prob is P*P1.
+nounphrase(Prob, [Article, Noun | End], End) :-
+    article(P1, Article), 
+    noun(P2, Noun), 
+    pr(n2, P),
+    Prob is P*P1*P2.
+/** Test */
+nounphrase(Prob, [Article, Adjective, Noun | End], End) :-
+    article(P1, Article), 
+    adjectivephrase(P2, [Adjective | Rest], End), 
+    pr(n2, P),
+    Prob is P*P1*P2.
+/** */
 nounphrase(Prob, [Noun | Rest], End) :-
     noun(P1, Noun),
-    prepositionphrase(P2, Rest, End),  pr(n3, P),
+    prepositionphrase(P2, Rest, End),  
+    pr(n3, P),
     Prob is P*P1*P2.
 nounphrase(Prob, [Article, Noun | Rest], End) :-
-    article(P1, Article), noun(P2, Noun), pr(n4, P),
+    article(P1, Article), 
+    noun(P2, Noun), 
+    pr(n4, P),
     prepositionphrase(P3, Rest, End),
     Prob is P*P1*P2*P3.
+
+
 verbphrase(Prob, [Verb | End], End) :-
-    verb(P1, Verb), pr(v1, P), Prob is P*P1.
+    verb(P1, Verb), 
+    pr(v1, P), 
+    Prob is P*P1.
 verbphrase(Prob, [Verb, Noun | Rest], End) :-
     verb(P1, Verb),
-    nounphrase(P2, [Noun | Rest], End), pr(v2, P),
+    nounphrase(P2, [Noun | Rest], End), 
+    pr(v2, P),
+    Prob is P*P1*P2.
+verbphrase(Prob, [Verb, Adjective | Rest], End) :-
+    verb(P1, Verb),
+    adjectivephrase(P2, [Adjective | Rest], End), 
+    pr(v2, P),
     Prob is P*P1*P2.
 verbphrase(Prob, [Verb, Article | Rest], End) :-
     verb(P1, Verb),
-    nounphrase(P2, [Article | Rest], End), pr(v2, P),
+    nounphrase(P2, [Article | Rest], End), 
+    pr(v2, P),
     Prob is P*P1*P2.
 verbphrase(Prob, [Verb, Preposition | Rest], End) :-
     verb(P1, Verb),
-    prepositionphrase(P2, [Preposition | Rest], End), pr(v3, P),
+    prepositionphrase(P2, [Preposition | Rest], End), 
+    pr(v3, P),
     Prob is P*P1*P2.
+
+
+
+
+
+
+/** The small cat eats: utterance(Prob, [the, small, cat, eats]).*/
+adjectivephrase(Prob, [Adjective, Noun | Rest], End) :-
+    adjective(P1, Adjective),
+    noun(P2, Noun),    
+    verbphrase(P3, [Rest], End),
+    pr(adj2, P),
+    Prob is P*P1*P2*P3.
+/** (Works) utterance(Prob, [the, cat, is, small]). */
+adjectivephrase(Prob, [Adjective | End], End) :-
+    adjective(P1, Adjective),
+    pr(adj2, P),
+    Prob is P*P1.
+/** Need to handle multiple adjectives (Conjunction) */
 
 
 prepositionphrase(Prob, [Preposition | Rest], End) :-
     preposition(P1, Preposition),
-    nounphrase(P2, Rest, End), pr(p1, P),
+    nounphrase(P2, Rest, End), 
+    pr(p1, P),
     Prob is P*P1*P2.
+
 
 pr(r1, 1.0).
 
@@ -48,7 +99,11 @@ pr(v1, 0.2).  /* probability that a verb ends the sentence */
 pr(v2, 0.6).  /* probability that a verb is followed by a nounphrase */
 pr(v3, 0.2).  /* propbability that a verb is followed by a prepositionphrase*/
 
+pr(adj1, 0.5). /* probability that an adjective phrase is followed by a verb phrase */
+pr(adj2, 0.5). /* probability that an adjective phrase contains just an ajective and ends */
+
 pr(p1, 1.0).  /* probability a preposition is followed by a noun phrase */
+
 
 article(0.28, a).
 article(0.11, some).
