@@ -27,11 +27,22 @@ nounphrase(Prob, [Article, Noun | Rest], End) :-
     pr(n4, P),
     prepositionphrase(P3, Rest, End),
     Prob is P*P1*P2*P3.
-nounphrase(Prob, [Article, Adjective, Noun | End], End) :-
+nounphrase(Prob, [Article | Rest], End) :-
     article(P1, Article), 
-    adjectivephrase(P2, [Adjective | Rest], End), 
+    adjectivephrase(P2, Rest, End), 
     pr(n5, P),
     Prob is P*P1*P2.
+nounphrase(Prob, [Noun | Rest], End) :-
+    noun(P1, Noun), 
+    conjunctionphrase(P2, Rest, End),
+    pr(n6, P), 
+    Prob is P*P1*P2.
+nounphrase(Prob, [Article, Noun | Rest], End) :-
+    article(P1, Article), 
+    noun(P2, Noun),
+    conjunctionphrase(P3, Rest, End), 
+    pr(n7, P),
+    Prob is P*P1*P2*P3.
 
 verbphrase(Prob, [Verb | End], End) :-
     verb(P1, Verb), 
@@ -52,24 +63,20 @@ verbphrase(Prob, [Verb, Preposition | Rest], End) :-
     prepositionphrase(P2, [Preposition | Rest], End), 
     pr(v3, P),
     Prob is P*P1*P2.
-/** Add new prob */
 verbphrase(Prob, [Adverb, Verb | Rest], End) :-
     adverbphrase(P1, [Adverb, Verb | Rest], End), 
-    pr(v2, P),
+    pr(v4, P),
     Prob is P*P1.
-/** Add new prob */
 verbphrase(Prob, [Verb, Adverb | Rest], End) :-
     verb(P1, Verb),
     adverbphrase(P2, [Adverb | Rest], End), 
-    pr(v2, P),
+    pr(v5, P),
     Prob is P*P1*P2.
-/** Add new prob */
 verbphrase(Prob, [Verb, Adjective | Rest], End) :-
     verb(P1, Verb),
     adjectivephrase(P2, [Adjective | Rest], End), 
-    pr(v2, P),
+    pr(v6, P),
     Prob is P*P1*P2.
-
 
 
 
@@ -79,19 +86,26 @@ verbphrase(Prob, [Verb, Adjective | Rest], End) :-
 adjectivephrase(Prob, [Adjective, Noun | Rest], End) :-
     adjective(P1, Adjective),
     noun(P2, Noun),    
-    verbphrase(P3, [Rest], End),
     pr(adj2, P),
-    Prob is P*P1*P2*P3.
+    Prob is P*P1*P2.
+/** [small, big, large, ... ] */
+adjectivephrase(Prob, [Adjective | Rest], End) :-
+    adjective(P1, Adjective),
+    adjectivephrase(P2, Rest, End),
+    pr(adj3, P),
+    Prob is P*P1*P2.
 /** (Works) utterance(Prob, [the, cat, is, small]). */
 adjectivephrase(Prob, [Adjective | End], End) :-
     adjective(P1, Adjective),
     pr(adj2, P),
     Prob is P*P1.
-
-/** Need to handle multiple adjectives (Conjunction) */
-    /** Article Conjuction(Adjectives) noun verbphrase() */
-    /** verb Conjunction(Adjectives) */
-
+/** [small, and big]*/
+adjectivephrase(Prob, [Adjective, Conjunction | Rest], End) :-
+    adjective(P1, Adjective),
+    conjunction(P2, Conjunction),
+    adjectivephrase(P3, Rest, End),
+    pr(adj4, P),
+    Prob is P*P1*P2*P3.
 
 
 /** utterance(Prob, [the, cat, eats, eloquently]). */
@@ -106,11 +120,28 @@ adverbphrase(Prob, [Adverb, Verb | Rest], End) :-
     pr(adv2, P),
     Prob is P*P1*P2.
 
-/** Need to handle multiple adjectives (Conjunction) */
-    /** verb Conjuction(Adverbs) */
-    /** Conjunction(Adjectives) verbphrase() */
+/** [eloquently, eloquently, ... ] */
+adverbphrase(Prob, [Adverb | Rest], End) :-
+    adverb(P1, Adverb),
+    adverbphrase(P2, Rest, End),
+    pr(adv3, P),
+    Prob is P*P1*P2.
+/** [eloquently and eloquently, ... ] */
+adverbphrase(Prob, [Adverb, Conjunction | Rest], End) :-
+    adverb(P1, Adverb),
+    conjunction(P2, Conjunction),
+    adverbphrase(P3, Rest, End),
+    pr(adv4, P),
+    Prob is P*P1*P2*P3.
 
 
+
+
+conjunctionphrase(Prob, [Conjunction | Rest], End) :-
+    conjunction(P1, Conjunction),
+    sentence(P2, Rest, [ ]),
+    pr(c1, P),
+    Prob is P*P1*P2.
 
 
 prepositionphrase(Prob, [Preposition | Rest], End) :-
@@ -122,11 +153,13 @@ prepositionphrase(Prob, [Preposition | Rest], End) :-
 
 pr(r1, 1.0).
 
-pr(n1, 0.15).  /* probability that a nounphrase contains just a noun and ends */
-pr(n2, 0.25).  /* probability that a nounphrase contains an article and a noun and ends*/
+pr(n1, 0.05).  /* probability that a nounphrase contains just a noun and ends */
+pr(n2, 0.15).  /* probability that a nounphrase contains an article and a noun and ends*/
 pr(n3, 0.15).  /* probability that a nounphrase contains just a noun and is followed by a preposition */
 pr(n4, 0.25).  /* probability that a nounphrase contains an article and noun and is followed by a preposition */
 pr(n5, 0.20).  /* probability that a nounphrase contains an article and as adjective phrase */
+pr(n6, 0.10).  /* probability that a nounphrase contains a noun and then a conjunctionphrase */
+pr(n7, 0.10).  /* probability that a nounphrase contains an article, a noun and then a conjunctionphrase*/
 
 pr(v1, 0.2).  /* probability that a verb ends the sentence */
 pr(v2, 0.18).  /* probability that a verb is followed by a nounphrase */
@@ -135,11 +168,17 @@ pr(v4, 0.18).  /* probability that an adverb is followed by a verb */
 pr(v5, 0.18).  /* probability that a verb is followed by an adverb phrase */
 pr(v6, 0.18).  /* probability that a verb is followed by an adjective phrase */
 
-pr(adj1, 0.5). /* probability that an adjective phrase is followed by a verb phrase */
-pr(adj2, 0.5). /* probability that an adjective phrase contains just an ajective and ends */
+pr(adj1, 0.25). /* probability that an adjective phrase is followed by a verb phrase */
+pr(adj2, 0.25). /* probability that an adjective phrase contains just an ajective and ends */
+pr(adj3, 0.25). /* probability that an adjective phrase contains an ajective and an ajectivephrase */
+pr(adj4, 0.25). /* probability that an adjective phrase contains an ajective, an and, and an ajectivephrase */
 
-pr(adv1, 0.5). /* probability that an adverb phrase contains just an adverb and ends */
-pr(adv1, 0.5). /* probability that an adverb phrase is followed by a verb phrase */
+pr(adv1, 0.25). /* probability that an adverb phrase contains just an adverb and ends */
+pr(adv2, 0.25). /* probability that an adverb phrase is followed by a verb phrase */
+pr(adv3, 0.25). /* probability that an adverb phrase contains an adverb and an adverbphrase */
+pr(adv4, 0.25). /* probability that an adverb phrase contains an adverb, an and, and an adverbphrase */
+
+pr(c1, 1.0).  /* probability a conjection */
 
 pr(p1, 1.0).  /* probability a preposition is followed by a noun phrase */
 
@@ -295,3 +334,6 @@ preposition(0.1 , outside).
 preposition(0.1 , inside).
 preposition(0.2 , with).
 preposition(0.1 , without).
+
+
+conjunction(1.0, and).

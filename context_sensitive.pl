@@ -18,10 +18,16 @@ nounphrase([Article, Noun | Rest], End, Number) :-
     article(Article, Number), 
     noun(Noun, Number),
     prepositionphrase(Rest, End, _).
-nounphrase([Article, Adjective, Noun | End], End, Number) :-
+nounphrase([Article | Rest], End, Number) :-
     article(Article, Number), 
-    adjectivephrase([Adjective | Rest], End, _).
-    
+    adjectivephrase(Rest, End, _).
+nounphrase([Noun | Rest], End, Number) :-
+    noun(Noun, Number), 
+    conjunctionphrase(Rest, End, _).
+nounphrase([Article, Noun | Rest], End, Number) :-
+    article(Article, Number), 
+    noun(Noun, Number),
+    conjunctionphrase(Rest, End, _). 
 
 verbphrase([Verb | End], End, Number) :-
     verb(Verb, Number).
@@ -44,36 +50,45 @@ verbphrase([Verb, Adjective | Rest], End, Number) :-
     adjectivephrase([Adjective | Rest], End, _). 
 
 
-/** The small cat eats: utterance( [the, small, cat, eats]).*/
+
+
+
+
 adjectivephrase([Adjective, Noun | Rest], End, Number) :-
     adjective(Adjective, Number),
-    noun(Noun, Number),    
-    verbphrase([Rest], End, _).
-
-/** (Works) utterance( [the, cat, is, small]). */
+    noun(Noun, Number).
+adjectivephrase([Adjective | Rest], End, Number) :-
+    adjective(Adjective, Number),
+    adjectivephrase(Rest, End, _).
 adjectivephrase([Adjective | End], End, Number) :-
     adjective(Adjective, Number).
+adjectivephrase([Adjective, Conjunction | Rest], End, Number) :-
+    adjective(Adjective, Number),
+    conjunction(Conjunction, Number),
+    adjectivephrase(Rest, End, _).
 
 
-/** Need to handle multiple adjectives (Conjunction) */
-    /** Article Conjuction(Adjectives) noun verbphrase() */
-    /** verb Conjunction(Adjectives) */
 
 
-
-/** utterance( [the, cat, eats, eloquently]). */
 adverbphrase([Adverb | End], End, Number) :-
     adverb(Adverb, Number).
-
-/** utterance( [the, cat, illegally, eats, eloquently]). */
 adverbphrase([Adverb, Verb | Rest], End, Number) :-
     adverb(Adverb, Number),
     verbphrase([Verb | Rest], End, _).
+adverbphrase([Adverb | Rest], End, Number) :-
+    adverb(Adverb, Number),
+    adverbphrase(Rest, End, _).
+adverbphrase([Adverb, Conjunction | Rest], End, Number) :-
+    adverb(Adverb, Number),
+    conjunction(Conjunction, Number),
+    adverbphrase(Rest, End, _).
 
 
-/** Need to handle multiple adjectives (Conjunction) */
-    /** verb Conjuction(Adverbs) */
-    /** Conjunction(Adjectives) verbphrase() */
+
+conjunctionphrase([Conjunction | Rest], End, Number) :-
+    conjunction(Conjunction, Number),
+    sentence(Rest, [ ]).
+
 
 
 
@@ -276,3 +291,7 @@ preposition(outside, plural).
 preposition(inside, plural).
 preposition(with, plural).
 preposition(without, plural).
+
+
+conjunction(and, plural).
+conjunction(and, singular).
