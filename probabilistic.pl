@@ -16,13 +16,12 @@ nounphrase(Prob, [Article, Noun | End], End) :-
     noun(P2, Noun), 
     pr(n2, P),
     Prob is P*P1*P2.
-/** Test */
+/** Add new prob */
 nounphrase(Prob, [Article, Adjective, Noun | End], End) :-
     article(P1, Article), 
     adjectivephrase(P2, [Adjective | Rest], End), 
     pr(n2, P),
     Prob is P*P1*P2.
-/** */
 nounphrase(Prob, [Noun | Rest], End) :-
     noun(P1, Noun),
     prepositionphrase(P2, Rest, End),  
@@ -45,6 +44,18 @@ verbphrase(Prob, [Verb, Noun | Rest], End) :-
     nounphrase(P2, [Noun | Rest], End), 
     pr(v2, P),
     Prob is P*P1*P2.
+/** Add new prob */
+verbphrase(Prob, [Adverb, Verb | Rest], End) :-
+    adverbphrase(P1, [Adverb, Verb | Rest], End), 
+    pr(v2, P),
+    Prob is P*P1.
+/** Add new prob */
+verbphrase(Prob, [Verb, Adverb | Rest], End) :-
+    verb(P1, Verb),
+    adverbphrase(P2, [Adverb | Rest], End), 
+    pr(v2, P),
+    Prob is P*P1*P2.
+/** Add new prob */
 verbphrase(Prob, [Verb, Adjective | Rest], End) :-
     verb(P1, Verb),
     adjectivephrase(P2, [Adjective | Rest], End), 
@@ -66,6 +77,7 @@ verbphrase(Prob, [Verb, Preposition | Rest], End) :-
 
 
 
+
 /** The small cat eats: utterance(Prob, [the, small, cat, eats]).*/
 adjectivephrase(Prob, [Adjective, Noun | Rest], End) :-
     adjective(P1, Adjective),
@@ -78,7 +90,30 @@ adjectivephrase(Prob, [Adjective | End], End) :-
     adjective(P1, Adjective),
     pr(adj2, P),
     Prob is P*P1.
+
 /** Need to handle multiple adjectives (Conjunction) */
+    /** Article Conjuction(Adjectives) noun verbphrase() */
+    /** verb Conjunction(Adjectives) */
+
+
+
+/** utterance(Prob, [the, cat, eats, eloquently]). */
+adverbphrase(Prob, [Adverb | End], End) :-
+    adverb(P1, Adverb),
+    pr(adv1, P),
+    Prob is P*P1.
+/** utterance(Prob, [the, cat, illegally, eats, eloquently]). */
+adverbphrase(Prob, [Adverb, Verb | Rest], End) :-
+    adverb(P1, Adverb),
+    verbphrase(P2, [Verb | Rest], End),
+    pr(adv2, P),
+    Prob is P*P1*P2.
+
+/** Need to handle multiple adjectives (Conjunction) */
+    /** verb Conjuction(Adverbs) */
+    /** Conjunction(Adjectives) verbphrase() */
+
+
 
 
 prepositionphrase(Prob, [Preposition | Rest], End) :-
@@ -101,6 +136,9 @@ pr(v3, 0.2).  /* propbability that a verb is followed by a prepositionphrase*/
 
 pr(adj1, 0.5). /* probability that an adjective phrase is followed by a verb phrase */
 pr(adj2, 0.5). /* probability that an adjective phrase contains just an ajective and ends */
+
+pr(adv1, 0.5). /* probability that an adjective phrase is followed by a verb phrase */
+pr(adv2, 0.5). /* probability that an adjective phrase contains just an ajective and ends */
 
 pr(p1, 1.0).  /* probability a preposition is followed by a noun phrase */
 
