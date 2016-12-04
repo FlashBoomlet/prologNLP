@@ -1,9 +1,9 @@
 Ryan: 
 	Project Scaffolding
 	Context NLP: 
-		Prepositions and Prepositional Phrases
+		Prepositions and Prepositional Phrases, conjunctions
 	Probabilities NLP: 
-		Prepositions and Prepositional Phrases
+		Prepositions and Prepositional Phrases, conjunctions
 Tyler: 
 	Probabilities 
 	Context NLP: 
