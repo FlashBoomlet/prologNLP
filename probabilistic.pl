@@ -143,7 +143,6 @@ adverbphrase(Prob, [Adverb, Verb | Rest], End) :-
     verbphrase(P2, [Verb | Rest], End),
     pr(adv2, P),
     Prob is P*P1*P2.
-
 /** [eloquently, eloquently, ... ] */
 adverbphrase(Prob, [Adverb | Rest], End) :-
     adverb(P1, Adverb),
@@ -157,16 +156,35 @@ adverbphrase(Prob, [Adverb, Conjunction | Rest], End) :-
     adverbphrase(P3, Rest, End),
     pr(adv4, P),
     Prob is P*P1*P2*P3.
+/** [ran slowly with him] */
+adverbphrase(Prob, [Adverb, Preposition | Rest], End) :-
+    adverb(P1, Adverb),
+    preposition(P2, Conjunction),
+    prepositionphrase(P3, Rest, End),
+    pr(adv5, P),
+    Prob is P*P1*P2*P3.
 
 
-
-
-conjunctionphrase(Prob, [Conjunction | Rest], End) :-
+conjunctionphrase(Prob, [Conjunction, Noun | Rest], End) :-
     conjunction(P1, Conjunction),
-    sentence(P2, Rest, [ ]),
+    nounphrase(P2, [Noun | Rest], End),
     pr(c1, P),
     Prob is P*P1*P2.
-
+conjunctionphrase(Prob, [Conjunction, Article, Noun | Rest], End) :-
+    conjunction(P1, Conjunction),
+    nounphrase(P2, [Article, Noun | Rest], End),
+    pr(c1, P),
+    Prob is P*P1*P2.
+conjunctionphrase(Prob, [Conjunction, Verb| Rest], End) :-
+    conjunction(P1, Conjunction),
+    verbphrase(P2, [Verb | Rest], End),
+    pr(c2, P),
+    Prob is P*P1*P2.
+conjunctionphrase(Prob, [Conjunction, Preposition | Rest], End) :-
+    conjunction(P1, Conjunction),
+    prepositionphrase(P2, [Preposition | Rest], End),
+    pr(c3, P),
+    Prob is P*P1*P2.
 
 prepositionphrase(Prob, [Preposition | Rest], End) :-
     preposition(P1, Preposition),
@@ -201,12 +219,15 @@ pr(adj2, 0.25). /* probability that an adjective phrase contains just an ajectiv
 pr(adj3, 0.25). /* probability that an adjective phrase contains an ajective and an ajectivephrase */
 pr(adj4, 0.25). /* probability that an adjective phrase contains an ajective, an and, and an ajectivephrase */
 
-pr(adv1, 0.25). /* probability that an adverb phrase contains just an adverb and ends */
-pr(adv2, 0.25). /* probability that an adverb phrase is followed by a verb phrase */
-pr(adv3, 0.25). /* probability that an adverb phrase contains an adverb and an adverbphrase */
-pr(adv4, 0.25). /* probability that an adverb phrase contains an adverb, an and, and an adverbphrase */
+pr(adv1, 0.20). /* probability that an adverb phrase contains just an adverb and ends */
+pr(adv2, 0.20). /* probability that an adverb phrase is followed by a verb phrase */
+pr(adv3, 0.20). /* probability that an adverb phrase contains an adverb and an adverbphrase */
+pr(adv4, 0.20). /* probability that an adverb phrase contains an adverb, an and, and an adverbphrase */
+pr(adv5, 0.20). /* probability that an adverb phrase is followed by a preposition. */
 
-pr(c1, 1.0).  /* probability a conjection */
+pr(c1, 0.5).  /* probability a conjection is followed by a noun */
+pr(c2, 0.25).  /* probability a conjuction is followed by a verb */
+pr(c3, 0.25).  /* probability a conjunction is followed by a preposition */
 
 pr(p1, 1.0).  /* probability a preposition is followed by a noun phrase */
 

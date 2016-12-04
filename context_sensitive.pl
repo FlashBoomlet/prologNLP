@@ -64,9 +64,6 @@ verbphrase([Verb, Adjective | Rest], End, Number) :-
 
 
 
-
-
-
 adjectivephrase([Adjective, Noun | Rest], End, Number) :-
     adjective(Adjective, Number),
     noun(Noun, Number).
@@ -91,6 +88,9 @@ adverbphrase([Adverb, Verb | Rest], End, Number) :-
 adverbphrase([Adverb | Rest], End, Number) :-
     adverb(Adverb, Number),
     adverbphrase(Rest, End, _).
+adverbphrase([Adverb, Preposition | Rest], End, Number) :-
+    adverb(Adverb, Number),
+    prepositionphrase([Preposition | Rest], End, _).
 adverbphrase([Adverb, Conjunction | Rest], End, Number) :-
     adverb(Adverb, Number),
     conjunction(Conjunction, Number),
@@ -98,19 +98,23 @@ adverbphrase([Adverb, Conjunction | Rest], End, Number) :-
 
 
 
-conjunctionphrase([Conjunction | Rest], End, Number) :-
+conjunctionphrase([Conjunction, Noun | Rest], End, Number) :-
     conjunction(Conjunction, Number),
-    sentence(Rest, [ ]).
-
-
+    nounphrase([Noun | Rest], End, _).
+conjunctionphrase([Conjunction, Article, Noun | Rest], End, Number) :-
+    conjunction(Conjunction, Number),
+    nounphrase([Article, Noun | Rest], End, _).
+conjunctionphrase([Conjunction, Verb | Rest], End, Number) :-
+    conjunction(Conjunction, Number),
+    verbphrase([Verb | Rest], End, _).
+conjunctionphrase([Conjunction, Preposition | Rest], End, Number) :-
+    conjunction(Conjunction, Number),
+    prepositionphrase([Preposition | Rest], End, _).
 
 
 prepositionphrase([Preposition | Rest], End, Number) :-
     preposition(Preposition, Number),
     nounphrase(Rest, End, _).
-
-
-
 
 
 
@@ -236,79 +240,42 @@ noun(pepperonis, plural).
 noun(sausage, singular).
 noun(sausages, plural).
 
-adjective(flat, singular).
-adjective(round, singular).
-adjective(black, singular).
-adjective(tinfoil, singular).
-adjective(small, singular).
-adjective(ice, singular).
-adjective(poisonous, singular).
-adjective(good, singular).
-adjective(nice, singular).
-adjective(fantasy, singular).
-adjective(fake, singular).
-adjective(real, singular).
-adjective(reptilian, singular).
-adjective(hollow, singular).
-adjective(illegal, singular).
-adjective(stupid, singular).
-adjective(great, singular).
-adjective(graceful, singular).
-adjective(expensive, singular).
-adjective(flat, plural).
-adjective(round, plural).
-adjective(black, plural).
-adjective(tinfoil, plural).
-adjective(small, plural).
-adjective(ice, plural).
-adjective(poisonous, plural).
-adjective(good, plural).
-adjective(nice, plural).
-adjective(fantasy, plural).
-adjective(fake, plural).
-adjective(real, plural).
-adjective(reptilian, plural).
-adjective(hollow, plural).
-adjective(illegal, plural).
-adjective(stupid, plural).
-adjective(great, plural).
-adjective(graceful, plural).
-adjective(expensive, plural).
+adjective(flat, _).
+adjective(round, _).
+adjective(black, _).
+adjective(tinfoil, _).
+adjective(small, _).
+adjective(icy, _).
+adjective(poisonous,_ ).
+adjective(good, _).
+adjective(nice, _).
+adjective(fantasy, _).
+adjective(fake, _).
+adjective(real, _).
+adjective(reptilian, _).
+adjective(hollow, _).
+adjective(illegal, _).
+adjective(stupid, _).
+adjective(great, _).
+adjective(graceful, _).
+adjective(expensive, _).
 
 
-adverb(wisely, singular).
-adverb(terribly, singular).
-adverb(eloquently, singular).
-adverb(stupidly, singular).
-adverb(illegally, singular).
-adverb(wisely, plural).
-adverb(terribly, plural).
-adverb(eloquently, plural).
-adverb(stupidly, plural).
-adverb(illegally, plural).
+adverb(wisely, _).
+adverb(terribly, _).
+adverb(eloquently, _).
+adverb(stupidly, _).
+adverb(illegally, _).
 
+preposition(against, _).
+preposition(for, _).
+preposition(before, _).
+preposition(after, _).
+preposition(outside, _).
+preposition(inside, _).
+preposition(with, _).
+preposition(without, _).
+preposition(in, _).
+preposition(under, _).
 
-preposition(against, singular).
-preposition(for, singular).
-preposition(before, singular).
-preposition(after, singular).
-preposition(outside, singular).
-preposition(inside, singular).
-preposition(with, singular).
-preposition(without, singular).
-preposition(against, plural).
-preposition(for, plural).
-preposition(before, plural).
-preposition(after, plural).
-preposition(outside, plural).
-preposition(inside, plural).
-preposition(with, plural).
-preposition(without, plural).
-preposition(in, singular).
-preposition(in, plural).
-preposition(under, singular).
-preposition(under, plural).
-
-
-conjunction(and, plural).
-conjunction(and, singular).
+conjunction(and, _).
