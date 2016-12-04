@@ -159,10 +159,9 @@ adverbphrase(Prob, [Adverb, Conjunction | Rest], End) :-
 /** [ran slowly with him] */
 adverbphrase(Prob, [Adverb, Preposition | Rest], End) :-
     adverb(P1, Adverb),
-    preposition(P2, Conjunction),
-    prepositionphrase(P3, Rest, End),
+    prepositionphrase(P2, Rest, End),
     pr(adv5, P),
-    Prob is P*P1*P2*P3.
+    Prob is P*P1*P2.
 
 
 conjunctionphrase(Prob, [Conjunction, Noun | Rest], End) :-
@@ -185,6 +184,12 @@ conjunctionphrase(Prob, [Conjunction, Preposition | Rest], End) :-
     prepositionphrase(P2, [Preposition | Rest], End),
     pr(c3, P),
     Prob is P*P1*P2.
+conjunctionphrase(Prob, [Conjunction, Adverb | Rest], End) :-
+    conjunction(P1, Conjunction),
+    adverbphrase(P2, [Adverb | Rest], End),
+    pr(c3, P),
+    Prob is P*P1*P2.
+
 
 prepositionphrase(Prob, [Preposition | Rest], End) :-
     preposition(P1, Preposition),
