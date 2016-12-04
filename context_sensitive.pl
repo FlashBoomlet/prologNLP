@@ -110,13 +110,14 @@ conjunctionphrase([Conjunction, Verb | Rest], End, Number) :-
 conjunctionphrase([Conjunction, Preposition | Rest], End, Number) :-
     conjunction(Conjunction, Number),
     prepositionphrase([Preposition | Rest], End, _).
+conjunctionphrase([Conjunction, Adverb | Rest], End, Number) :-
+    conjunction(Conjunction, Number),
+    adverbphrase([Adverb | Rest], End, _).
 
 
 prepositionphrase([Preposition | Rest], End, Number) :-
     preposition(Preposition, Number),
     nounphrase(Rest, End, _).
-
-
 
 article(a, singular).
 article(some, plural).
