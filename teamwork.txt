@@ -1,0 +1,12 @@
+Ryan: 
+	Project Scaffolding
+	Context NLP: 
+		Prepositions and Prepositional Phrases
+	Probabilities NLP: 
+		Prepositions and Prepositional Phrases
+Tyler: 
+	Probabilities 
+	Context NLP: 
+		Adverbs, Adjectives, and Conjunctions
+	Probabilities NLP: 
+		Adverbs, Adjectives, and Conjunctions
