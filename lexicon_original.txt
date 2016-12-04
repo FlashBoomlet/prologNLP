@@ -120,79 +120,28 @@ noun(pepperonis, plural).
 noun(sausage, singular).
 noun(sausages, plural).
 
-adjective(flat, singular).
-adjective(round, singular).
-adjective(black, singular).
-adjective(tinfoil, singular).
-adjective(small, singular).
-adjective(ice, singular).
-adjective(poisonous, singular).
-adjective(good, singular).
-adjective(nice, singular).
-adjective(fantasy, singular).
-adjective(fake, singular).
-adjective(real, singular).
-adjective(reptilian, singular).
-adjective(hollow, singular).
-adjective(illegal, singular).
-adjective(stupid, singular).
-adjective(great, singular).
-adjective(graceful, singular).
-adjective(expensive, singular).
-adjective(flat, plural).
-adjective(round, plural).
-adjective(black, plural).
-adjective(tinfoil, plural).
-adjective(small, plural).
-adjective(ice, plural).
-adjective(poisonous, plural).
-adjective(good, plural).
-adjective(nice, plural).
-adjective(fantasy, plural).
-adjective(fake, plural).
-adjective(real, plural).
-adjective(reptilian, plural).
-adjective(hollow, plural).
-adjective(illegal, plural).
-adjective(stupid, plural).
-adjective(great, plural).
-adjective(graceful, plural).
-adjective(expensive, plural).
+adjective(flat).
+adjective(round).
+adjective(black).
+adjective(tinfoil).
+adjective(small).
+adjective(ice).
+adjective(poisonous).
+adjective(good).
+adjective(nice).
+adjective(fantasy).
+adjective(fake).
+adjective(real).
+adjective(reptilian).
+adjective(hollow).
+adjective(illegal).
+adjective(stupid).
+adjective(great).
+adjective(graceful).
+adjective(expensive).
 
-
-adverb(wisely, singular).
-adverb(terribly, singular).
-adverb(eloquently, singular).
-adverb(stupidly, singular).
-adverb(illegally, singular).
-adverb(wisely, plural).
-adverb(terribly, plural).
-adverb(eloquently, plural).
-adverb(stupidly, plural).
-adverb(illegally, plural).
-
-
-preposition(against, singular).
-preposition(for, singular).
-preposition(before, singular).
-preposition(after, singular).
-preposition(outside, singular).
-preposition(inside, singular).
-preposition(with, singular).
-preposition(without, singular).
-preposition(against, plural).
-preposition(for, plural).
-preposition(before, plural).
-preposition(after, plural).
-preposition(outside, plural).
-preposition(inside, plural).
-preposition(with, plural).
-preposition(without, plural).
-preposition(in, singular).
-preposition(in, plural).
-preposition(under, singular).
-preposition(under, plural).
-
-
-conjunction(and, plural).
-conjunction(and, singular).
+adverb(wisely).
+adverb(terribly).
+adverb(eloquently).
+adverb(stupidly).
+adverb(illegally).
