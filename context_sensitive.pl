@@ -304,6 +304,10 @@ preposition(outside, plural).
 preposition(inside, plural).
 preposition(with, plural).
 preposition(without, plural).
+preposition(in, singular).
+preposition(in, plural).
+preposition(under, singular).
+preposition(under, plural).
 
 
 conjunction(and, plural).

@@ -1,0 +1,263 @@
+ttlynch@ttlynch:~/prologNLP$ gprolog
+GNU Prolog 1.3.0
+By Daniel Diaz
+Copyright (C) 1999-2007 Daniel Diaz
+| ?- [context_sensitive].
+compiling /home/ttlynch/prologNLP/context_sensitive.pl for byte code...
+/home/ttlynch/prologNLP/context_sensitive.pl:24-25: warning: singleton variables [Number] for nounphrase/3
+/home/ttlynch/prologNLP/context_sensitive.pl:35-37: warning: singleton variables [Noun,Adverb] for nounphrase/3
+/home/ttlynch/prologNLP/context_sensitive.pl:38-41: warning: singleton variables [Noun,Adverb] for nounphrase/3
+/home/ttlynch/prologNLP/context_sensitive.pl:56-57: warning: singleton variables [Number] for verbphrase/3
+/home/ttlynch/prologNLP/context_sensitive.pl:70-72: warning: singleton variables [Rest,End] for adjectivephrase/3
+/home/ttlynch/prologNLP/context_sensitive.pl:101-103: warning: singleton variables [End] for conjunctionphrase/3
+/home/ttlynch/prologNLP/context_sensitive.pl compiled, 314 lines read - 30117 bytes written, 10 ms
+
+(4 ms) yes
+| ?- trace.
+The debugger will first creep -- showing everything (trace)
+
+yes
+{trace}
+| ?- utterance([aliens, exist, under, the, flat, earth]).
+      1    1  Call: utterance([aliens,exist,under,the,flat,earth]) ? 
+      2    2  Call: sentence([aliens,exist,under,the,flat,earth],[]) ? 
+      3    3  Call: nounphrase([aliens,exist,under,the,flat,earth],_115,_116) ? 
+      4    4  Call: noun(aliens,_139) ? 
+      4    4  Exit: noun(aliens,plural) ? 
+      3    3  Exit: nounphrase([aliens,exist,under,the,flat,earth],[exist,under,the,flat,earth],plural) ? 
+      5    3  Call: verbphrase([exist,under,the,flat,earth],[],plural) ? 
+      6    4  Call: verb(exist,plural) ? 
+      6    4  Exit: verb(exist,plural) ? 
+      7    4  Call: nounphrase([under,the,flat,earth],[],_179) ? 
+      8    5  Call: noun(under,_179) ? 
+      8    5  Fail: noun(under,_179) ? 
+      8    5  Call: article(under,_179) ? 
+      8    5  Fail: article(under,_179) ? 
+      8    5  Call: article(under,_179) ? 
+      8    5  Fail: article(under,_179) ? 
+      8    5  Call: adjectivephrase([under,the,flat,earth],[],_209) ? 
+      9    6  Call: adjective(under,_209) ? 
+      9    6  Fail: adjective(under,_209) ? 
+      9    6  Call: adjective(under,_209) ? 
+      9    6  Fail: adjective(under,_209) ? 
+      9    6  Call: adjective(under,_209) ? 
+      9    6  Fail: adjective(under,_209) ? 
+      8    5  Fail: adjectivephrase([under,the,flat,earth],[],_209) ? 
+      8    5  Call: noun(under,_179) ? 
+      8    5  Fail: noun(under,_179) ? 
+      8    5  Call: article(under,_179) ? 
+      8    5  Fail: article(under,_179) ? 
+      8    5  Call: prepositionphrase([under,the,flat,earth],[],_179) ? 
+      9    6  Call: preposition(under,_179) ? 
+      9    6  Exit: preposition(under,singular) ? 
+     10    6  Call: nounphrase([the,flat,earth],[],_257) ? 
+     11    7  Call: noun(the,_257) ? 
+     11    7  Fail: noun(the,_257) ? 
+     11    7  Call: article(the,_257) ? 
+     11    7  Exit: article(the,singular) ? 
+     12    7  Call: noun(flat,singular) ? 
+     12    7  Fail: noun(flat,singular) ? 
+     11    7  Redo: article(the,singular) ? 
+     11    7  Exit: article(the,plural) ? 
+     12    7  Call: noun(flat,plural) ? 
+     12    7  Fail: noun(flat,plural) ? 
+     11    7  Call: article(the,_257) ? 
+     11    7  Exit: article(the,singular) ? 
+     12    7  Call: adjectivephrase([flat,earth],[],_308) ? 
+     13    8  Call: adjective(flat,_308) ? 
+     13    8  Exit: adjective(flat,singular) ? 
+     14    8  Call: noun(earth,singular) ? 
+     14    8  Exit: noun(earth,singular) ? 
+     12    7  Exit: adjectivephrase([flat,earth],[],singular) ? 
+     10    6  Exit: nounphrase([the,flat,earth],[],singular) ? 
+      8    5  Exit: prepositionphrase([under,the,flat,earth],[],singular) ? 
+      7    4  Exit: nounphrase([under,the,flat,earth],[],singular) ? 
+      5    3  Exit: verbphrase([exist,under,the,flat,earth],[],plural) ? 
+      2    2  Exit: sentence([aliens,exist,under,the,flat,earth],[]) ? 
+      1    1  Exit: utterance([aliens,exist,under,the,flat,earth]) ? 
+
+true ? 
+
+yes
+{trace}
+| ?- 
+
+
+
+
+
+
+utterance([black, helicopters, are, terribly, real]).
+      1    1  Call: utterance([black,helicopters,are,terribly,real]) ? 
+      2    2  Call: sentence([black,helicopters,are,terribly,real],[]) ? 
+      3    3  Call: nounphrase([black,helicopters,are,terribly,real],_113,_114) ? 
+      4    4  Call: noun(black,_137) ? 
+      4    4  Fail: noun(black,_125) ? 
+      4    4  Call: noun(helicopters,_137) ? 
+      4    4  Exit: noun(helicopters,plural) ? 
+      5    4  Call: article(black,plural) ? 
+      5    4  Fail: article(black,plural) ? 
+      4    4  Call: noun(black,_137) ? 
+      4    4  Fail: noun(black,_125) ? 
+      4    4  Call: article(black,_137) ? 
+      4    4  Fail: article(black,_125) ? 
+      4    4  Call: article(black,_137) ? 
+      4    4  Fail: article(black,_125) ? 
+      4    4  Call: adjectivephrase([black,helicopters,are,terribly,real],_143,_103) ? 
+      5    5  Call: adjective(black,_103) ? 
+      5    5  Exit: adjective(black,singular) ? 
+      6    5  Call: noun(helicopters,singular) ? 
+      6    5  Fail: noun(helicopters,singular) ? 
+      5    5  Redo: adjective(black,singular) ? 
+      5    5  Exit: adjective(black,plural) ? 
+      6    5  Call: noun(helicopters,plural) ? 
+      6    5  Exit: noun(helicopters,plural) ? 
+      4    4  Exit: adjectivephrase([black,helicopters,are,terribly,real],_195,plural) ? 
+      3    3  Exit: nounphrase([black,helicopters,are,terribly,real],_196,_197) ? 
+      7    3  Call: verbphrase(_181,[],_182) ? 
+      8    4  Call: verb(_208,_182) ? 
+      8    4  Exit: verb(tells,singular) ? 
+      7    3  Exit: verbphrase([tells],[],singular) ? 
+      2    2  Exit: sentence([black,helicopters,are,terribly,real],[]) ? 
+      1    1  Exit: utterance([black,helicopters,are,terribly,real]) ? 
+
+true ? 
+
+(4 ms) yes
+{trace}
+| ?- 
+
+
+
+
+
+
+utterance([trump, wants, a, great, great, wall]). 
+      1    1  Call: utterance([trump,wants,a,great,great,wall]) ? 
+      2    2  Call: sentence([trump,wants,a,great,great,wall],[]) ? 
+      3    3  Call: nounphrase([trump,wants,a,great,great,wall],_115,_116) ? 
+      4    4  Call: noun(trump,_139) ? 
+      4    4  Exit: noun(trump,singular) ? 
+      3    3  Exit: nounphrase([trump,wants,a,great,great,wall],[wants,a,great,great,wall],singular) ? 
+      5    3  Call: verbphrase([wants,a,great,great,wall],[],singular) ? 
+      6    4  Call: verb(wants,singular) ? 
+      6    4  Exit: verb(wants,singular) ? 
+      7    4  Call: nounphrase([a,great,great,wall],[],_179) ? 
+      8    5  Call: noun(a,_179) ? 
+      8    5  Fail: noun(a,_179) ? 
+      8    5  Call: article(a,_179) ? 
+      8    5  Exit: article(a,singular) ? 
+      9    5  Call: noun(great,singular) ? 
+      9    5  Fail: noun(great,singular) ? 
+      8    5  Call: article(a,_179) ? 
+      8    5  Exit: article(a,singular) ? 
+      9    5  Call: adjectivephrase([great,great,wall],[],_230) ? 
+     10    6  Call: adjective(great,_230) ? 
+     10    6  Exit: adjective(great,singular) ? 
+     11    6  Call: noun(great,singular) ? 
+     11    6  Fail: noun(great,singular) ? 
+     10    6  Redo: adjective(great,singular) ? 
+     10    6  Exit: adjective(great,plural) ? 
+     11    6  Call: noun(great,plural) ? 
+     11    6  Fail: noun(great,plural) ? 
+     10    6  Call: adjective(great,_230) ? 
+     10    6  Exit: adjective(great,singular) ? 
+     11    6  Call: adjectivephrase([great,wall],[],_281) ? 
+     12    7  Call: adjective(great,_281) ? 
+     12    7  Exit: adjective(great,singular) ? 
+     13    7  Call: noun(wall,singular) ? 
+     13    7  Exit: noun(wall,singular) ? 
+     11    6  Exit: adjectivephrase([great,wall],[],singular) ? 
+      9    5  Exit: adjectivephrase([great,great,wall],[],singular) ? 
+      7    4  Exit: nounphrase([a,great,great,wall],[],singular) ? 
+      5    3  Exit: verbphrase([wants,a,great,great,wall],[],singular) ? 
+      2    2  Exit: sentence([trump,wants,a,great,great,wall],[]) ? 
+      1    1  Exit: utterance([trump,wants,a,great,great,wall]) ? 
+
+true ? 
+
+yes
+{trace}
+| ?- 
+
+
+
+
+
+utterance([the, robot, scans, small, and, round, brains]).
+      1    1  Call: utterance([the,robot,scans,small,and,round,brains]) ? 
+      2    2  Call: sentence([the,robot,scans,small,and,round,brains],[]) ? 
+      3    3  Call: nounphrase([the,robot,scans,small,and,round,brains],_117,_118) ? 
+      4    4  Call: noun(the,_141) ? 
+      4    4  Fail: noun(the,_129) ? 
+      4    4  Call: noun(robot,_141) ? 
+      4    4  Exit: noun(robot,singular) ? 
+      5    4  Call: article(the,singular) ? 
+      5    4  Exit: article(the,singular) ? 
+      3    3  Exit: nounphrase([the,robot,scans,small,and,round,brains],[scans,small,and,round,brains],singular) ? 
+      6    3  Call: verbphrase([scans,small,and,round,brains],[],singular) ? 
+      7    4  Call: verb(scans,singular) ? 
+      7    4  Exit: verb(scans,singular) ? 
+      8    4  Call: nounphrase([small,and,round,brains],[],_206) ? 
+      9    5  Call: noun(small,_206) ? 
+      9    5  Fail: noun(small,_206) ? 
+      9    5  Call: article(small,_206) ? 
+      9    5  Fail: article(small,_206) ? 
+      9    5  Call: article(small,_206) ? 
+      9    5  Fail: article(small,_206) ? 
+      9    5  Call: adjectivephrase([small,and,round,brains],[],_236) ? 
+     10    6  Call: adjective(small,_236) ? 
+     10    6  Exit: adjective(small,singular) ? 
+     11    6  Call: noun(and,singular) ? 
+     11    6  Fail: noun(and,singular) ? 
+     10    6  Redo: adjective(small,singular) ? 
+     10    6  Exit: adjective(small,plural) ? 
+     11    6  Call: noun(and,plural) ? 
+     11    6  Fail: noun(and,plural) ? 
+     10    6  Call: adjective(small,_236) ? 
+     10    6  Exit: adjective(small,singular) ? 
+     11    6  Call: adjectivephrase([and,round,brains],[],_287) ? 
+     12    7  Call: adjective(and,_287) ? 
+     12    7  Fail: adjective(and,_287) ? 
+     12    7  Call: adjective(and,_287) ? 
+     12    7  Fail: adjective(and,_287) ? 
+     12    7  Call: adjective(and,_287) ? 
+     12    7  Fail: adjective(and,_287) ? 
+     11    6  Fail: adjectivephrase([and,round,brains],[],_287) ? 
+     10    6  Redo: adjective(small,singular) ? 
+     10    6  Exit: adjective(small,plural) ? 
+     11    6  Call: adjectivephrase([and,round,brains],[],_287) ? 
+     12    7  Call: adjective(and,_287) ? 
+     12    7  Fail: adjective(and,_287) ? 
+     12    7  Call: adjective(and,_287) ? 
+     12    7  Fail: adjective(and,_287) ? 
+     12    7  Call: adjective(and,_287) ? 
+     12    7  Fail: adjective(and,_287) ? 
+     11    6  Fail: adjectivephrase([and,round,brains],[],_287) ? 
+     10    6  Call: adjective(small,_236) ? 
+     10    6  Exit: adjective(small,singular) ? 
+     11    6  Call: conjunction(and,singular) ? 
+     11    6  Exit: conjunction(and,singular) ? 
+     12    6  Call: adjectivephrase([round,brains],[],_312) ? 
+     13    7  Call: adjective(round,_312) ? 
+     13    7  Exit: adjective(round,singular) ? 
+     14    7  Call: noun(brains,singular) ? 
+     14    7  Fail: noun(brains,singular) ? 
+     13    7  Redo: adjective(round,singular) ? 
+     13    7  Exit: adjective(round,plural) ? 
+     14    7  Call: noun(brains,plural) ? 
+     14    7  Exit: noun(brains,plural) ? 
+     12    6  Exit: adjectivephrase([round,brains],[],plural) ? 
+      9    5  Exit: adjectivephrase([small,and,round,brains],[],singular) ? 
+      8    4  Exit: nounphrase([small,and,round,brains],[],_206) ? 
+      6    3  Exit: verbphrase([scans,small,and,round,brains],[],singular) ? 
+      2    2  Exit: sentence([the,robot,scans,small,and,round,brains],[]) ? 
+      1    1  Exit: utterance([the,robot,scans,small,and,round,brains]) ? 
+
+true ? 
+
+yes
+{trace}
+| ?- 
+
+

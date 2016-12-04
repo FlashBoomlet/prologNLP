@@ -47,13 +47,10 @@ nounphrase(Prob, [Adjective, Noun | Rest], End) :-
     adjectivephrase(P1, [Adjective, Noun | Rest], End), 
     pr(n8, P), 
     Prob is P*P1.
-/* add */
 nounphrase(Prob, [Preposition | Rest], End) :-
     prepositionphrase(P1, [Preposition | Rest], End),  
     pr(n9, P),
     Prob is P*P1.
-
-
 /** [John, Tyler, ... ] */
 nounphrase(Prob, [Noun | Rest], End) :-
     noun(P1, Adverb),
@@ -357,8 +354,8 @@ adverb(0.11, eloquently).
 adverb(0.16, stupidly).
 adverb(0.31, illegally).
 
-preposition(0.15 , against).
-preposition(0.15 , for).
+preposition(0.1 , against).
+preposition(0.1 , for).
 preposition(0.1 , before).
 preposition(0.1 , after).
 preposition(0.1 , outside).
@@ -366,6 +363,7 @@ preposition(0.1 , inside).
 preposition(0.1 , with).
 preposition(0.1 , without).
 preposition(0.1 , in).
+preposition(0.1 , under).
 
 
 conjunction(1.0, and).
